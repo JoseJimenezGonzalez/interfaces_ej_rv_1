@@ -27,6 +27,11 @@ class MainActivity2 : AppCompatActivity() {
             binding.tvTelefono.text = persona.telefono
         }
 
+        binding.ivBack.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
     }
     //La extension de funcion parcelable utilizara el metodo adecuado segun la version de la API
     inline fun <reified T : Parcelable> Intent.parcelable(key: String): T? = when {
