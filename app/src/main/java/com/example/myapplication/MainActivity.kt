@@ -1,11 +1,13 @@
 package com.example.myapplication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.databinding.ActivityMain2Binding
 import com.example.myapplication.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapterRecyclerView: AdapterRecyclerView
@@ -101,11 +103,17 @@ class MainActivity : AppCompatActivity() {
         //adapterRecyclerView = AdapterRecyclerView(listaPersonas): Se crea una instancia del adaptador
         //personalizado AdapterRecyclerView, que se espera que tenga una lista de objetos
         //Persona (listaPersonas) como su conjunto de datos.
-        adapterRecyclerView = AdapterRecyclerView(listaPersonas)
+        adapterRecyclerView = AdapterRecyclerView(listaPersonas, this)
         //apply permite realizar múltiples configuraciones en binding.rv sin tener que repetir binding.rv.
         binding.rv.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = adapterRecyclerView
         }
+    }
+
+    override fun onItemClick(persona: Persona) {
+        val intent = Intent(this, MainActivity2::class.java)
+        intent.putExtra("persona", persona)
+        startActivity(intent)
     }
 }
