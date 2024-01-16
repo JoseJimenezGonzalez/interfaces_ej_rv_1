@@ -21,8 +21,9 @@ class AdapterRecyclerView(private var listaUsuarios: MutableList<Persona>, priva
     //la Persona en la posición actual.
     override fun onBindViewHolder(holder: AdapterRecyclerView.ViewHolder, position: Int) {
         val itemUsuarioActual = listaUsuarios[position]
+
         holder.bind(itemUsuarioActual)
-        //???
+
         holder.setListener(itemUsuarioActual)
     }
     //getItemCount: Devuelve el número total de elementos en el conjunto de datos (en este caso, la lista de usuarios).
@@ -44,11 +45,11 @@ class AdapterRecyclerView(private var listaUsuarios: MutableList<Persona>, priva
             view.setOnClickListener(this)
         }
 
-        fun bind(item: Persona){
-            binding.tvNombre.text = item.nombre
-            binding.tvCorreo.text = item.correo
-            binding.tvNumeroTelefono.text = item.telefono
-            item.imagen?.let { binding.ivFotoPersona.setImageResource(it) }
+        fun bind(persona: Persona){
+            binding.tvNombre.text = persona.nombre
+            binding.tvCorreo.text = persona.correo
+            binding.tvNumeroTelefono.text = persona.telefono
+            persona.imagen?.let { binding.ivFotoPersona.setImageResource(it) }
         }
 
         override fun onClick(v: View) {
