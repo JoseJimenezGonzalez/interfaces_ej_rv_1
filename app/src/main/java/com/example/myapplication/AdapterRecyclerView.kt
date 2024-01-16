@@ -22,6 +22,8 @@ class AdapterRecyclerView(private var listaUsuarios: MutableList<Persona>, priva
     override fun onBindViewHolder(holder: AdapterRecyclerView.ViewHolder, position: Int) {
         val itemUsuarioActual = listaUsuarios[position]
         holder.bind(itemUsuarioActual)
+        //???
+        holder.setListener(itemUsuarioActual)
     }
     //getItemCount: Devuelve el número total de elementos en el conjunto de datos (en este caso, la lista de usuarios).
     override fun getItemCount(): Int = listaUsuarios.size
@@ -30,6 +32,13 @@ class AdapterRecyclerView(private var listaUsuarios: MutableList<Persona>, priva
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view), View.OnClickListener{
 
         val binding = ItemUserBinding.bind(view)
+
+        fun setListener(persona: Persona){
+            binding.root.setOnLongClickListener {
+                itemClickListener.onLongItemClick(persona)
+                true
+            }
+        }
 
         init {
             view.setOnClickListener(this)
@@ -47,5 +56,10 @@ class AdapterRecyclerView(private var listaUsuarios: MutableList<Persona>, priva
             val persona: Persona = listaUsuarios[posicion]
             itemClickListener.onItemClick(persona)
         }
+    }
+
+    fun eliminarPersona(persona: Persona) {
+        listaUsuarios.remove(persona)
+        notifyDataSetChanged()
     }
 }

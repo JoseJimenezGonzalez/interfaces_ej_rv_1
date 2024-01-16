@@ -1,10 +1,11 @@
 package com.example.myapplication
 
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.databinding.ActivityMain2Binding
 import com.example.myapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), OnItemClickListener {
@@ -116,4 +117,27 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         intent.putExtra("persona", persona)
         startActivity(intent)
     }
+
+    override fun onLongItemClick(persona: Persona) {
+        eliminarPersonaAutomaticamente(persona)
+    }
+
+    private fun eliminarPersonaAutomaticamente(persona: Persona) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Eliminar contacto")
+        builder.setMessage("¿Estás seguro de que deseas eliminar este contacto?")
+        builder.setPositiveButton("Sí") { _, _ ->
+            // Elimina la persona de la lista
+            adapterRecyclerView.eliminarPersona(persona)
+            // Notifica al adaptador que se ha eliminado un elemento
+            adapterRecyclerView.notifyDataSetChanged()
+        }
+        builder.setNegativeButton("No") { _, _ ->
+            // No hacer nada si el usuario elige no eliminar
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+
 }
